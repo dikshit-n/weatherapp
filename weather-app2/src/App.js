@@ -20,7 +20,8 @@ class App extends Component {
     url:'',
     F:"",
     unit:"C",
-    weather_condition:""
+    weather_condition:"",
+    opacity:false
   }
 
   componentDidMount = () => {
@@ -51,6 +52,7 @@ class App extends Component {
   }
   
   BeforeLoad=(a,time)=>{
+    this.setState({opacity:false})
     var time2=time
     if (time2>=6 && time2<12)
       this.setState({url:"https://ak1.picdn.net/shutterstock/videos/1927591/thumb/4.jpg"})
@@ -101,6 +103,7 @@ class App extends Component {
     console.log("WEATHER:",celcius)
     console.log(this.state.city)
     this.setState({city2:this.state.city})
+    this.setState({opacity:true})
   }
 
 
@@ -108,7 +111,7 @@ class App extends Component {
     return(
       <div className="body" style={{backgroundImage:'url('+this.state.url+')'}} >
         <C.Search Click={()=>this.BeforeLoad(this.state.city)} city={this.state.city} Change={(event)=>this.handleChange(event)} />
-        <C.Weather Weather={this.state.Weather} WindSpeed={this.state.WindSpeed} Weather_condition={this.state.weather_condition} Country={this.state.city2} Click={this.handleClick} />
+        <C.Weather Opacity={this.state.opacity} Weather={this.state.Weather} WindSpeed={this.state.WindSpeed} Weather_condition={this.state.weather_condition} Country={this.state.city2} Click={this.handleClick} />
         <div className="below">
           <div className="weather-details">
               <C.Weather_details name="HUMIDITY" />

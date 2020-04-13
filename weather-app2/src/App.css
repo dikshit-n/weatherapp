@@ -6,7 +6,6 @@
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
-  /* background-attachment: local; */
   z-index: 3;
   overflow-y: scroll;
   left: 0;
@@ -16,7 +15,6 @@
   top: 0;
   transition: opacity 700ms;
   width: 100%;
-  /* background-image: url("https://media.apnarm.net.au/media/images/2020/01/18/v3imagesbine76612d66681acfed714c2b3342c0e7a-tlmnqor9926qf02kot2.jpg"); */
 }
 .body::-webkit-scrollbar{
   display: none;
@@ -53,6 +51,13 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  opacity: 0;
+}
+.true{
+  opacity:1;
+}
+.false{
+  opacity:0;
 }
 .weath-dept{
   width: 100%;

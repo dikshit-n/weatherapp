@@ -10,16 +10,24 @@ class Weather extends React.Component{
     // onMouseOver={(event)=>this.back1(event)}
     render(){
         // if(this.props.Weather_condition==="Sunny")
+        var mn = "sun.png"
+        var classn
+        if(this.props.Opacity){
+            classn="bind true"
+        }
+        else{
+            classn="bind false"
+        }
         return(
             <div className="weath-dept">
-                <div className="bind">
-                    <div class="weather-condition">
+                <div className={classn} >
+                    <div className="weather-condition">
                         {this.props.Weather_condition}
                     </div>
                     <div className="show-weather">
                         <div className="one-container">
                             <div className="icon">
-                                <img src={require("./sun.png")} className="image" />
+                                <img src={require(`./${mn}`)} className="image" />
                             </div>
                             <div className="w">
                                 <div>{this.props.Weather} </div>
