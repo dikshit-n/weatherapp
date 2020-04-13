@@ -1,14 +1,16 @@
 import React from "react"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
-import {faCloudSunRain} from '@fortawesome/free-solid-svg-icons'
 
 class Weather extends React.Component{
-    // back1(event){
-    //     event
-    // }
-    // onMouseOver={(event)=>this.back1(event)}
-    render(){
+    render=()=>{
+        var a=this.props.Country;
+        if(a!==undefined){
+            a=a.split(" ")
+            a=a[0]
+            a=a.split(",")
+            a=a[0]
+        }
         // if(this.props.Weather_condition==="Sunny")
         var mn = "sun.png"
         var classn
@@ -27,7 +29,7 @@ class Weather extends React.Component{
                     <div className="show-weather">
                         <div className="one-container">
                             <div className="icon">
-                                <img src={require(`./${mn}`)} className="image" />
+                                <img src={require(`./${mn}`)} className="image" alt="img" />
                             </div>
                             <div className="w">
                                 <div>{this.props.Weather} </div>
@@ -38,17 +40,17 @@ class Weather extends React.Component{
                             <div className="two"  >
                                     <div className="tx" id="t" onClick={this.props.Click}>F</div>
                             </div>
-                            {/* <div className="two" id="t" onClick={this.props.Click} >F</div> */}
                         </div>
                     </div>
                     <div className="show-country">
-                        {this.props.Country}
+                        {a}
                     </div>
                 </div>
             </div>
         )
     }
 }
+
 
 const Search = props => {
     return(
@@ -64,9 +66,8 @@ const Search = props => {
 const Weather_details = props => {
     return(
         <div className="inner" >
-            <div className="content">
-                {props.name}
-            </div>
+            <div className="other">{props.Value}</div>
+            <div>{props.name}</div>
         </div>
     )
 }

@@ -21,7 +21,13 @@ class App extends Component {
     F:"",
     unit:"C",
     weather_condition:"",
-    opacity:false
+    opacity:false,
+    Height:"50",
+    Wind:"80kph",
+    Sunrise:"9.00",
+    Sunset:"9.00",
+    Rain:"50%",
+    Low:"67"
   }
 
   componentDidMount = () => {
@@ -114,12 +120,16 @@ class App extends Component {
         <C.Weather Opacity={this.state.opacity} Weather={this.state.Weather} WindSpeed={this.state.WindSpeed} Weather_condition={this.state.weather_condition} Country={this.state.city2} Click={this.handleClick} />
         <div className="below">
           <div className="weather-details">
-              <C.Weather_details name="HUMIDITY" />
-              <C.Weather_details name="HUMIDITY" />
-              <C.Weather_details name="HUMIDITY" />
-              <C.Weather_details name="HUMIDITY" />
-              <C.Weather_details name="HUMIDITY" />
-              <C.Weather_details name="HUMIDITY" />
+            <div className="ab">
+              <C.Weather_details name="Height" Value={this.state.Height} />
+              <C.Weather_details name="Wind" Value={this.state.Wind} />
+              <C.Weather_details name="Sunrise" Value={this.state.Sunrise} />
+            </div>
+            <div className="ab">
+              <C.Weather_details name="Low" Value={this.state.Low} />
+              <C.Weather_details name="Rain" Value={this.state.Rain} />
+              <C.Weather_details name="Sunset" Value={this.state.Sunset} />
+            </div>
           </div>
           
         </div>

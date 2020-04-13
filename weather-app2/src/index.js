@@ -7,7 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 ReactDOM.render(<App />, document.getElementById('root'));
 var one = document.getElementById('o')
 var two = document.getElementById('t')
-two.onmouseover=() => two.style="border: 1px solid whitesmoke;";
+two.onmouseover=() => two.style="border: 1px solid whitesmoke;cursor:pointer";
 two.onmouseleave=()=> two.style="border:none;"
 two.onclick=() => {
     if(two.innerHTML==="C"){
