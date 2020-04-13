@@ -22,8 +22,8 @@ class App extends Component {
     unit:"C",
     weather_condition:"",
     opacity:false,
-    Height:"50",
-    Wind:"80kph",
+    Humidity:"50",
+    Wind:"",
     Sunrise:"9.00",
     Sunset:"9.00",
     Rain:"50%",
@@ -83,7 +83,7 @@ class App extends Component {
 }
 
   Weather=()=>{
-    const api = proxy + "https://api.darksky.net/forecast/d3b28870fe6a9fcaa4351437b95b8135/"+lat+","+long+"?units=si"
+    const api = proxy + "https://api.darksky.net/forecast/d3b28870fe6a9fcaa4351437b95b8135/"+lat+","+long+"?units=ca"
     fetch(api)
     .then(res=>{
     return res.json()
@@ -98,18 +98,21 @@ class App extends Component {
     var windspeed = weather_data.currently.windSpeed+" kmp"
     var celcius = Math.floor(weather_data.currently.temperature) +"°"
     var Far = "13°"
-    var wc = "Sunny"
+    var wc = weather_data.daily.data[0].icon
     this.setState({WindSpeed:windspeed})
     cels=celcius
     Fare=Far
     this.setState({Weather:cels})
     this.setState({F:Fare})
     this.setState({weather_condition:wc})
-    console.log("WINDSPEED:",windspeed)
+    this.setState({Wind: Math.round(weather_data.currently.windSpeed)+"kph"})
+    this.setState({Humidity:weather_data.currently.humidity})
+    console.log("WINDSPEED:", weather_data.currently.windSpeed)
     console.log("WEATHER:",celcius)
     console.log(this.state.city)
     this.setState({city2:this.state.city})
     this.setState({opacity:true})
+    console.log("Yoooooooooo"+weather_data.daily.data[0].icon)
   }
 
 
@@ -121,7 +124,7 @@ class App extends Component {
         <div className="below">
           <div className="weather-details">
             <div className="ab">
-              <C.Weather_details name="Height" Value={this.state.Height} />
+              <C.Weather_details name="Humidity" Value={this.state.Height} />
               <C.Weather_details name="Wind" Value={this.state.Wind} />
               <C.Weather_details name="Sunrise" Value={this.state.Sunrise} />
             </div>
@@ -138,4 +141,11 @@ class App extends Component {
   }
   }
 
+
 export default Radium(App);
+
+
+
+
+
+
