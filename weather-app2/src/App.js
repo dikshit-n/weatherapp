@@ -9,6 +9,9 @@ var lat
 var long
 var Fare
 var cels
+var bg_url
+var weather_type
+var icon
 class App extends Component {
 
   state={
@@ -17,7 +20,7 @@ class App extends Component {
     Weather:"",
     city2:this.city,
     time:"",
-    url:'',
+    bg_url:'',
     F:"",
     unit:"C",
     weather_condition:"",
@@ -27,16 +30,14 @@ class App extends Component {
     Sunrise:"9.00",
     Sunset:"9.00",
     Rain:"50%",
-    Low:"67"
+    Low:"67",
+    icon:""
   }
 
   componentDidMount = () => {
     var city1 = "mexico"
-    var time1=13
-    this.setState({city:city1})
-    this.setState({city2:city1})
-    this.setState({time:time1})
-    this.BeforeLoad(city1,time1) 
+    this.setState({city:city1 , city2:city1 })
+    this.BeforeLoad(city1) 
   }    
   
   
@@ -47,27 +48,14 @@ class App extends Component {
 
   handleClick = () => {
     if(this.state.unit==="C"){
-      this.setState({unit:"F"})
-      this.setState({Weather:Fare})
+      this.setState({unit:"F" , Weather:Fare })
     }
     else if(this.state.unit==="F"){
-      this.setState({unit:"C"})
-      this.setState({Weather:cels})
+      this.setState({unit:"C" , Weather:cels })
     }
-    console.log(this.state.unit)
   }
   
-  BeforeLoad=(a,time)=>{
-    this.setState({opacity:false})
-    var time2=time
-    if (time2>=6 && time2<12)
-      this.setState({url:"https://ak1.picdn.net/shutterstock/videos/1927591/thumb/4.jpg"})
-    else if(time2>=12 && time2<17)
-      this.setState({url:"https://s3.envato.com/files/1646240/eveningclouds.jpg"})
-    else if(time2>=17 && time2<=19)
-      this.setState({url:"https://cdn62.picsart.com/186281275001202.jpg?type=webp&to=min&r=640"})
-    else if(time2>19)
-      this.setState({url:"https://s1.1zoom.me/b3337/445/Sky_Clouds_Moon_558021_2560x1440.jpg"})
+  BeforeLoad=(a)=>{
     var url = "https://api.mapbox.com/geocoding/v5/mapbox.places/" + a + ".json?access_token=pk.eyJ1IjoiamFnYWRoZWVzaDYiLCJhIjoiY2s3aXo4MTBlMG5xdDNrbHB1OXZ4NGdnNSJ9.BmItdc7_NyDeeUsFMNL2kA"
     fetch(url)
         .then(res => {
@@ -93,49 +81,39 @@ class App extends Component {
     this.AfterLoad()
 })
 }
-
   AfterLoad=()=>{
     var windspeed = weather_data.currently.windSpeed+" kmp"
     var celcius = Math.floor(weather_data.currently.temperature) +"°"
     var Far = "13°"
     var wc = weather_data.daily.data[0].icon
-    this.setState({WindSpeed:windspeed})
+    console.log(wc)
     cels=celcius
     Fare=Far
-    this.setState({Weather:cels})
-    this.setState({F:Fare})
-    this.setState({weather_condition:wc})
-    this.setState({Wind: Math.round(weather_data.currently.windSpeed)+"kph"})
-    this.setState({Humidity:weather_data.currently.humidity})
-    console.log("WINDSPEED:", weather_data.currently.windSpeed)
-    console.log("WEATHER:",celcius)
-    console.log(this.state.city)
-    this.setState({city2:this.state.city})
-    this.setState({opacity:true})
-    console.log("Yoooooooooo"+weather_data.daily.data[0].icon)
+    this.setState({Weather:cels,
+                   WindSpeed:windspeed,
+                   F:Fare,
+                   weather_condition:wc,
+                   Wind: Math.round(weather_data.currently.windSpeed)+" kph",
+                   Humidity:weather_data.currently.humidity,
+                   city2:this.state.city,
+                   opacity:true
+    })
+    weather_type=this.state.weather_condition
+    if(weather_type==="sunny"){ bg_url="https://i.redd.it/nzvvy9h9lhkx.jpg"; icon="icons/sun.png"; }
+    else if(weather_type==="clear-day"){ bg_url="https://s3.envato.com/files/1646240/eveningclouds.jpg"; icon="icons/clear-day.png" }
+    else if(weather_type==="cloudy" || weather_type==="partly-cloudy-day"){ bg_url="https://www.vmcdn.ca/f/files/sudbury/uploadedImages/news/localNews/rain-clouds.jpg;w=960"; icon="icons/cloudy.png" }
+    else if(weather_type==="rain"){ bg_url="https://media.graytvinc.com/images/690*388/Rain+Clouds+Pixabay.jpg"; icon="icons/rain.png" }
+    else if(weather_type==="snow"){ bg_url="https://c4.wallpaperflare.com/wallpaper/151/870/500/snow-trees-forest-nature-wallpaper-preview.jpg"; icon="icons/snow.png" }
+    this.setState({bg_url:bg_url,icon:icon})
   }
 
 
   render(){
     return(
-      <div className="body" style={{backgroundImage:'url('+this.state.url+')'}} >
-        <C.Search Click={()=>this.BeforeLoad(this.state.city)} city={this.state.city} Change={(event)=>this.handleChange(event)} />
-        <C.Weather Opacity={this.state.opacity} Weather={this.state.Weather} WindSpeed={this.state.WindSpeed} Weather_condition={this.state.weather_condition} Country={this.state.city2} Click={this.handleClick} />
-        <div className="below">
-          <div className="weather-details">
-            <div className="ab">
-              <C.Weather_details name="Humidity" Value={this.state.Height} />
-              <C.Weather_details name="Wind" Value={this.state.Wind} />
-              <C.Weather_details name="Sunrise" Value={this.state.Sunrise} />
-            </div>
-            <div className="ab">
-              <C.Weather_details name="Low" Value={this.state.Low} />
-              <C.Weather_details name="Rain" Value={this.state.Rain} />
-              <C.Weather_details name="Sunset" Value={this.state.Sunset} />
-            </div>
-          </div>
-          
-        </div>
+      <div className="body" style={{backgroundImage:'url('+this.state.bg_url+')'}} >
+        <C.Search Click={()=>this.BeforeLoad(this.state.city,this.state.weather_condition)} city={this.state.city} Change={(event)=>this.handleChange(event)} />
+        <C.Weather State={this.state}  Click={this.handleClick} />
+        <C.Below State={this.state} />
       </div>
     )
   }
@@ -143,9 +121,3 @@ class App extends Component {
 
 
 export default Radium(App);
-
-
-
-
-
-

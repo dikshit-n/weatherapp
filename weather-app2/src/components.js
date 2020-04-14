@@ -1,20 +1,23 @@
-import React from "react"
+ import React from "react"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
 
 class Weather extends React.Component{
     render=()=>{
-        var a=this.props.Country;
-        if(a!==undefined){
-            a=a.split(" ")
-            a=a[0]
-            a=a.split(",")
-            a=a[0]
+        var country_name=this.props.State.city2;
+        if(country_name!==undefined){
+            country_name=country_name.split(",")
+            country_name=country_name[0]
+            country_name=country_name.split(" ")
+            if(country_name[1]!==undefined)
+            country_name=country_name[0]+" "+country_name[1]
+            else
+            country_name=country_name[0]
         }
         // if(this.props.Weather_condition==="Sunny")
-        var mn = "sun.png"
+        var mn = this.props.State.icon
         var classn
-        if(this.props.Opacity){
+        if(this.props.State.opacity){
             classn="bind true"
         }
         else{
@@ -23,42 +26,70 @@ class Weather extends React.Component{
         return(
             <div className="weath-dept">
                 <div className={classn} >
-                    <div className="weather-condition">
-                        {this.props.Weather_condition}
-                    </div>
-                    <div className="show-weather">
-                        <div className="one-container">
-                            <div className="icon">
-                                <img src={require(`./${mn}`)} className="image" alt="img" />
-                            </div>
-                            <div className="w">
-                                <div>{this.props.Weather} </div>
-                            </div>
-                        </div>
-                        <div className="two-container">
-                            <div className="one" id="o">C</div>
-                            <div className="two"  >
-                                    <div className="tx" id="t" onClick={this.props.Click}>F</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="show-country">
-                        {a}
-                    </div>
+                    <Show_Country Country_name={country_name} />
+                    <Show_Weather Picture={mn} Weather={this.props.State.Weather} Click={this.props.Click} />
+                    <Weather_Condition Weather_condition={this.props.State.weather_condition} />
                 </div>
             </div>
         )
     }
 }
 
+const Show_Country = props => {
+    return (
+        <div className="show-country">
+            {props.Country_name}
+        </div>
+    )
+}
+
+const Show_Weather = props => {
+    return(
+        <div className="show-weather">
+                <div className="icon"><img src={require(`./${props.Picture}`)} className="image" alt="img" /></div>
+                <div className="we">{props.Weather}</div>
+                <div className="celcius-fahrenheit">
+                    <div className="one" id="o">C</div>
+                    <div className="two" id="t" onClick={props.Click}>F</div>
+                </div>
+        </div>
+    )
+}
+
+const Weather_Condition = props => {
+    return(
+        <div className="weather-condition">
+            {props.Weather_condition}
+        </div>
+    )
+}
+
+const Below = props => {
+    return(
+        <div className="below">
+          <div className="weather-details">
+            <div className="ab">
+              <Weather_details name="Humidity" Value={props.State.Humidity} />
+              <Weather_details name="Wind" Value={props.State.Wind} />
+              <Weather_details name="Sunrise" Value={props.State.Sunrise} />
+            </div>
+            <div className="ab">
+              <Weather_details name="Low" Value={props.State.Low} />
+              <Weather_details name="Rain" Value={props.State.Rain} />
+              <Weather_details name="Sunset" Value={props.State.Sunset} />
+            </div>
+          </div>
+        </div>
+    )
+}
 
 const Search = props => {
     return(
         <div className="search-area" >
-            <input spellCheck="false" className="textbox" type="textbox" placeholder="Search.." value={props.city} onChange={props.Change} />
-            <div className="search" >
-                <FontAwesomeIcon icon={faSearch} onClick={props.Click} />
-            </div>
+                <input spellCheck="false" className="textbox" type="textbox" placeholder="Search.." value={props.city} onChange={props.Change} />
+                <div className="search" >
+                    <FontAwesomeIcon icon={faSearch} onClick={props.Click} />
+                </div>
         </div>
     )
 }
@@ -73,4 +104,4 @@ const Weather_details = props => {
 }
 
 export default Weather
-export {Search,Weather,Weather_details}
+export {Search,Weather,Below}
