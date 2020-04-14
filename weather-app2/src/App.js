@@ -12,6 +12,7 @@ var cels
 var bg_url
 var weather_type
 var icon
+
 class App extends Component {
 
   state={
