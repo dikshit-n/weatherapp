@@ -26,7 +26,7 @@ class App extends Component {
     unit:"C",
     weather_condition:"",
     opacity:false,
-    Humidity:"50",
+    Humidity:"",
     Wind:"",
     Sunrise:"9.00",
     Sunset:"9.00",

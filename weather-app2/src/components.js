@@ -67,18 +67,20 @@ const Weather_Condition = props => {
 const Below = props => {
     return(
         <div className="below">
+          <div className="fake-weather-details"></div>
           <div className="weather-details">
-            <div className="ab">
+            <div className="ab absolute1">
               <Weather_details name="Humidity" Value={props.State.Humidity} />
               <Weather_details name="Wind" Value={props.State.Wind} />
               <Weather_details name="Sunrise" Value={props.State.Sunrise} />
             </div>
-            <div className="ab">
+            <div className="be absolute2">
               <Weather_details name="Low" Value={props.State.Low} />
               <Weather_details name="Rain" Value={props.State.Rain} />
               <Weather_details name="Sunset" Value={props.State.Sunset} />
             </div>
           </div>
+          
         </div>
     )
 }
@@ -87,8 +89,8 @@ const Search = props => {
     return(
         <div className="search-area" >
                 <input spellCheck="false" className="textbox" type="textbox" placeholder="Search.." value={props.city} onChange={props.Change} />
-                <div className="search" >
-                    <FontAwesomeIcon icon={faSearch} onClick={props.Click} />
+                <div className="search" onClick={props.Click} >
+                    <FontAwesomeIcon icon={faSearch}/>
                 </div>
         </div>
     )
@@ -100,6 +102,7 @@ const Weather_details = props => {
             <div className="other">{props.Value}</div>
             <div>{props.name}</div>
         </div>
+        
     )
 }
 
