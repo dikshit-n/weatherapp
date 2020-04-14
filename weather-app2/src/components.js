@@ -69,12 +69,12 @@ const Below = props => {
         <div className="below">
           <div className="fake-weather-details"></div>
           <div className="weather-details">
-            <div className="ab absolute1">
+            <div className="ab">
               <Weather_details name="Humidity" Value={props.State.Humidity} />
               <Weather_details name="Wind" Value={props.State.Wind} />
               <Weather_details name="Sunrise" Value={props.State.Sunrise} />
             </div>
-            <div className="be absolute2">
+            <div className="ab">
               <Weather_details name="Low" Value={props.State.Low} />
               <Weather_details name="Rain" Value={props.State.Rain} />
               <Weather_details name="Sunset" Value={props.State.Sunset} />
