@@ -9,6 +9,7 @@ var lat
 var long
 var Fare
 var cels
+
 class App extends Component {
 
   state={
